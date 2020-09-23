@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+
+  postgres:
+    image: library/postgres:12.3
+    restart: always
+    env_file: .env
+
+  service:
+    build:
+      dockerfile: ./Dockerfile
+      context: .
+    env_file: .env
+    command: ["tail", "-f", "/dev/null"]
+    depends_on:
+      - postgres
+    volumes:
+      - .:/code
