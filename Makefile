@@ -11,7 +11,7 @@ lean-layer:
 	cd etl_function/layer && zip -r9 ../../lean_layer.zip .
 
 lean-function:
-	cd etl_function && zip -9 ../lean_function.zip main.py
+	cd etl_function && zip -9 ../lean_function.zip main.py utils.py
 
 lean-deployment:
 	make lean-layer
