@@ -134,3 +134,4 @@ dmypy.json
 # lambda deployments
 *.zip
 etl_function/package
+etl_function/layer

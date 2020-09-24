@@ -84,7 +84,6 @@ def load_data(data, dbname, dbuser, dbpass, dbhost, dbport):
         password=dbpass,
         host=dbhost,
         port=dbport,
-        sslrequire=True,
     )
     logger.info("load_data::connected to the database")
 
