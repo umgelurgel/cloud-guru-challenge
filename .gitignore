@@ -130,3 +130,7 @@ dmypy.json
 
 # pycharm
 .idea
+
+# lambda deployments
+*.zip
+etl_function/package

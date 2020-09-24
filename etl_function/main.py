@@ -1,10 +1,15 @@
 import csv
 import os
+import logging
 from dateutil import parser
 
 import requests
 import psycopg2
 from psycopg2.extras import execute_values
+
+logger = logging.getLogger()
+logger.setLevel(logging.INFO)
+
 
 new_york_times_data_uri = (
     "https://raw.githubusercontent.com/nytimes/covid-19-data/master/us.csv"
@@ -23,7 +28,9 @@ def fetch_csv(uri):
 def get_data():
     # fetch the data and parse it
     nyt_raw_data = csv.DictReader(fetch_csv(new_york_times_data_uri))
+    logger.info("get_data::fetched NYT data")
     jh_raw_data = csv.DictReader(fetch_csv(john_hopkins_data_url))
+    logger.info("get_data::fetched JH data")
 
     # process the nyt data, casting the date strings to date objects
     # create a list of dicts with the relevant data
@@ -77,7 +84,9 @@ def load_data(data, dbname, dbuser, dbpass, dbhost, dbport):
         password=dbpass,
         host=dbhost,
         port=dbport,
+        sslrequire=True,
     )
+    logger.info("load_data::connected to the database")
 
     try:
         # create the tables if they don't already exist
@@ -92,6 +101,7 @@ def load_data(data, dbname, dbuser, dbpass, dbhost, dbport):
                     recoveries integer NOT NULL
                 );"""
             )
+        logger.info("load_data::created the DB table or table already exists")
 
         # upsert data records
         data_for_upsert = [
@@ -111,9 +121,12 @@ def load_data(data, dbname, dbuser, dbpass, dbhost, dbport):
                 data_for_upsert,
                 fetch=True,
             )
+        logger.info("load_data::upserted data")
+
     finally:
         # commit changes and close connection
         conn.close()
+        logger.info("load_data::changes committed")
 
     # result is a list of tuples, where the first element of the tuple is the one we need.
     # the aggregation could have been done in SQL as well, but it would lead to less readable code
@@ -126,11 +139,15 @@ def load_data(data, dbname, dbuser, dbpass, dbhost, dbport):
 
 
 def main():
+    logger.info("main::Starting execution")
     dbname, dbuser, dbpass, dbhost, dbport = get_db_connection_params()
+    logger.info("main::Collected DB credentials")
     data = get_data()
+    logger.info("main::Collected DB credentials")
     inserts, updates = load_data(data, dbname, dbuser, dbpass, dbhost, dbport)
-    print(f"There were {inserts} inserts and {updates} updates")
+    logger.info("main::Loaded data to db")
+    logger.info(f"main::There were {inserts} inserts and {updates} updates")
 
 
-if __name__ == "__main__":
+def lambda_handler(event, context):
     main()

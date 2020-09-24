@@ -16,4 +16,4 @@ services:
     depends_on:
       - postgres
     volumes:
-      - .:/code
+      - ./etl_function:/code
