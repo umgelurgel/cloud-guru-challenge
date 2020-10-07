@@ -12,7 +12,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Run linter
-        run: docker-compose run --rm service flake8
+        run: docker-compose run --rm service black --check .
 
   unit-test:
     # Run pytest
