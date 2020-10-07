@@ -4,8 +4,8 @@ on: push
 
 jobs:
   lint:
-    # Run flake8 to lint the code
-    name: Flake8 lint
+    # Run black to lint the code
+    name: Black lint
     runs-on: ubuntu-latest
 
     steps:
@@ -22,5 +22,5 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      - name: Run linter
+      - name: Run pytest
         run: docker-compose run --rm service pytest
