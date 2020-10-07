@@ -10,11 +10,11 @@ logger.setLevel(logging.INFO)
 
 
 def send_success_message(inserts, updates):
-    client = boto3.client('sns')
+    client = boto3.client("sns")
     response = client.publish(
         TopicArn=os.environ["SUCCESS_SNS_TOPIC_ARN"],
         Message=f"There were {inserts} inserts and {updates} updates",
-        Subject='ETL Lambda Succeeded',
+        Subject="ETL Lambda Succeeded",
     )
     logger.info(f"send_success_message::{response}")
 

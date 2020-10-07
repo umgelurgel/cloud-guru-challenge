@@ -1,0 +1,26 @@
+name: CI Pipeline
+
+on: push
+
+jobs:
+  lint:
+    # Run black to lint the code
+    name: Black lint
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Run linter
+        run: docker-compose run --rm service black --check .
+
+  unit-test:
+    # Run pytest
+    name: Pytest unit tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Run pytest
+        run: docker-compose run --rm service pytest

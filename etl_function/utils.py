@@ -14,7 +14,7 @@ logger.setLevel(logging.INFO)
 new_york_times_data_uri = (
     "https://raw.githubusercontent.com/nytimes/covid-19-data/master/us.csv"
 )
-john_hopkins_data_url = "https://raw.githubusercontent.com/datasets/covid-19/master/data/time-series-19-covid-combined.csv"
+john_hopkins_data_url = "https://raw.githubusercontent.com/datasets/covid-19/master/data/time-series-19-covid-combined.csv"  # noqa: E501
 
 
 def fetch_csv(uri):
@@ -115,7 +115,8 @@ def load_data(data, dbname, dbuser, dbpass, dbhost, dbport):
                 VALUES %s
                 ON CONFLICT (update_date) DO
                 UPDATE SET cases = EXCLUDED.cases, deaths = EXCLUDED.deaths, recoveries = EXCLUDED.recoveries
-                WHERE covid.cases != EXCLUDED.cases OR covid.deaths != EXCLUDED.deaths OR covid.recoveries != EXCLUDED.recoveries
+                WHERE covid.cases != EXCLUDED.cases OR covid.deaths != EXCLUDED.deaths
+                    OR covid.recoveries != EXCLUDED.recoveries
                 RETURNING xmax;""",
                 data_for_upsert,
                 fetch=True,
