@@ -13,3 +13,14 @@ jobs:
         uses: actions/checkout@v2
       - name: Run linter
         run: docker-compose run --rm service flake8
+
+  unit-test:
+    # Run pytest
+    name: Pytest unit tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Run linter
+        run: docker-compose run --rm service pytest
