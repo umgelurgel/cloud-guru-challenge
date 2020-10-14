@@ -6,9 +6,9 @@ full-deployment:
 	mv etl_function/full_function.zip .
 
 lean-layer:
-	mkdir -p ./etl_function/layer/python
-	pip install --target ./etl_function/layer/python -r requirements.txt
-	cd etl_function/layer && zip -r9 ../../lean_layer.zip .
+	mkdir -p ./etl_function/python
+	pip install --target ./etl_function/python -r requirements.txt
+	cd etl_function && zip -r9 ../../lean_layer.zip ./python
 
 lean-function:
 	cd etl_function && zip -9 ../lean_function.zip main.py utils.py
