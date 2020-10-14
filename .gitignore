@@ -133,4 +133,8 @@ dmypy.json
 # lambda deployments
 *.zip
 etl_function/package
-etl_function/layer
+etl_function/python
+
+# terraform local files
+.terraform
+*.auto.tfvars

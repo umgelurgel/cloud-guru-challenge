@@ -19,6 +19,6 @@ def send_success_message(inserts, updates):
     logger.info(f"send_success_message::{response}")
 
 
-def lambda_handler(event, context):
+def handler(event, context):
     inserts, updates = main()
     send_success_message(inserts, updates)
