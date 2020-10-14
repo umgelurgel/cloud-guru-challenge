@@ -36,16 +36,6 @@ resource "aws_subnet" "etl_public_a" {
   }
 }
 
-resource "aws_subnet" "etl_public_b" {
-  vpc_id            = aws_vpc.etl_vpc.id
-  cidr_block        = "10.0.2.0/24"
-  availability_zone = data.aws_availability_zones.available.names[1]
-
-  tags = {
-    Name = "etl-public-b"
-  }
-}
-
 resource "aws_subnet" "etl_private_a" {
   vpc_id            = aws_vpc.etl_vpc.id
   cidr_block        = "10.0.3.0/24"
@@ -115,10 +105,5 @@ resource "aws_route_table" "etl_public_route_table" {
 
 resource "aws_route_table_association" "etl_public_subnet_a_route_table" {
   subnet_id      = aws_subnet.etl_public_a.id
-  route_table_id = aws_route_table.etl_public_route_table.id
-}
-
-resource "aws_route_table_association" "etl_public_subnet_b_route_table" {
-  subnet_id      = aws_subnet.etl_public_b.id
   route_table_id = aws_route_table.etl_public_route_table.id
 }
