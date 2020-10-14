@@ -6,7 +6,7 @@ Repository containing the implementation of the system described in the [cloud g
 
 The goal was to develop a system that would pull multiple CSV files from github once a day, clean and merge certain rows and write them to a database. Every successful or failed execution should trigger a notification. It should also be possible to view a visualisation of the stored data.
 
-## Solution description
+## Solution
 
 Lambda seemed like the perfect candidate for regular, scheduled, short tasks and RDS seems like the perfect destination to store csv data. The goal was to keep the solution within AWS, so QuickSight was chosen as the visulation tool. To make the solution more secure, I wanted to keep the database in a private subnet - which in turn required the lambda to be moved to the VPC to be able to connect to the database.
 
